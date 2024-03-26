@@ -15,6 +15,7 @@ public class playerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
+
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -23,16 +24,17 @@ public class playerMovement : MonoBehaviour
     Vector3 moveDirection;
     Rigidbody rb;
 
+
     [Header("Crouching")]
     public float crouchSpeed;
     public float crouchYScale;
     private float startYScale;
 
+
     [Header("Slope Handler")]
     public float maxSlopeAngle;
     public RaycastHit slopeHit;
     bool exitingSlope;
-
 
 
     [Header("Keybinds")]
@@ -47,7 +49,7 @@ public class playerMovement : MonoBehaviour
     bool grounded;
 
     public MovementState state;
-    public enum MovementState
+    public enum MovementState  //The movement has certain states that's why I use enum to organise states. 
     {
         walking,
         sprinting,
@@ -63,12 +65,14 @@ public class playerMovement : MonoBehaviour
     }
     void Update()
     {
+        //Ground Check
         grounded = Physics.Raycast(transform.position,Vector3.down, playerHeight * 0.5f+0.3f , whatisGround);
                
         myInput();
         SpeedControl();
         StateHandler();
 
+        //Handle Drag
         if (grounded) 
             rb.drag = groundDrag;
         else
